@@ -10,5 +10,10 @@ $(function(){
   });
 
   models.Post.fetch();
+
+  $('#create-post').on('submit', function(e){
+    e.preventDefault();
+    $(document).trigger('create:post', [{title: "Cool", body: "Cool"}]);
+  });
+
 });
-// test
