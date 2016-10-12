@@ -7,7 +7,8 @@ function Post(){
 }
 
 Post.fetch = function(){
-  var promise = $.ajax('http://tiny-lasagna-server.herokuapp.com/collections/posts');
+  var url = 'http://tiny-lasagna-server.herokuapp.com/collections/posts';
+  var promise = $.ajax(url);
 
   promise.then(function(posts){
     $(document).trigger('posts:fetched', [posts]);
@@ -17829,6 +17830,20 @@ describe("PostView", function(){
       expect($('.posts li h1').text()).to.equal("Title");
       expect($('.posts li p').text()).to.equal("Body");
     });
+  });
+});
+
+describe("create post form", function(){
+  it('should trigger a create:post event on the document with the title and body', function(done){
+    $(document).on('create:post', function(event, post){
+      expect(post).to.have.property('title');
+      expect(post).to.have.property('body');
+      done();
+    });
+
+    $('.post-title').val("Title");
+    $('.post-body').val("Body");
+    $('#create-post').submit();
   });
 });
 
