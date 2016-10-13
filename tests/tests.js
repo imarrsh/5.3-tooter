@@ -65,6 +65,7 @@ describe("create post form", function(){
   describe("post event", function(){
 
     it('should trigger a create:post event on the document with the title and body', function(done){
+      // go get the scripts index.js so we can hear the custom event
       var index = require('../app/scripts/index');
 
       $(document).on('create:post', function(event, post){
@@ -76,6 +77,22 @@ describe("create post form", function(){
       $('.post-title').val("Title");
       $('.post-body').val("Body");
       $('#create-post').submit();
+    });
+
+    it("should be equal to the information submitted in the form", function(done){
+
+      // var index = require('../app/scripts/index');
+
+      $(document).on('create:post', function(event, post){
+        expect(post.title).to.equal("Cool");
+        expect(post.body).to.equal("Cool");
+        done();
+      });
+      //
+      $('.post-title').val();
+      $('.post-body').val();
+      $('#create-post').submit();
+
     });
 
   });
